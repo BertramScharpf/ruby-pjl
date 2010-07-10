@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+#
+#  mfc7420  --  Print to Brother MFC7420
+#
+
+require "rubygems"
+require "pjl"
+
+
+class MFC7420 < PJL
+
+  RES = 600
+
+  GS = %W(gs -r#{RES}
+            -q -dBATCH -dPARANOIDSAFER -dQUIET -dNOPAUSE
+            -sDEVICE=ljet2p -sOutputFile=- - -c quit)
+
+  def run name
+    job name do
+      set :ras1200mode => :off
+      set :resolution  => RES
+      set :economode   => :off
+      set :sourcetray  => :tray1
+      set :mediatype   => :regular
+      set :orientation => :portrait
+      set :paper       => :a4
+      set :pageprotect => :auto
+      enter :pcl do
+        pipe GS
+      end
+    end
+  end
+
+end
+
+opts = {}
+while $*.first =~ /\A-(.)/ do
+  opts[ $1] = $'
+  $*.shift
+end
+
+jn = opts[ "A"]
+jn ||= %Q{#{opts[ "n"]}@#{opts[ "h"]}-#$$}
+
+MFC7420.new.run jn
+

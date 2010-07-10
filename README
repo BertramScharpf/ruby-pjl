@@ -1,0 +1,14 @@
+= ruby-pjl 1.0  --  Generating PJL in Ruby
+
+Just write some PJL commands from a Ruby program.
+
+See file <code>example/mfc7420</code> for a complete example.
+
+== Contents
+
+* class PJL
+
+== TODO
+
+Write RDoc.
+
