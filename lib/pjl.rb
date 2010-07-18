@@ -91,7 +91,7 @@ class PJL
   end
 
   def enter language
-    pjl_opt :job, :language => language.to_sym
+    pjl_opt :enter, :language => language.to_sym
     yield
   ensure
     uel
