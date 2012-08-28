@@ -2,12 +2,9 @@
 #  pjl.gemspec  --  Ruby-PJL Gem specification
 #
 
-
-require "rubygems"
-
 require "./lib/pjl.rb"
 
-SPEC = Gem::Specification.new do |s|
+Gem::Specification.new do |s|
   s.name              = "pjl"
   s.version           = PJL::VERSION
   s.summary           = "PJL generation"
@@ -26,9 +23,5 @@ EOT
                           LICENSE
                           example/mfc7420
                         )
-end
-
-if $0 == __FILE__ then
-  (Gem::Builder.new SPEC).build
 end
 
