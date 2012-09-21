@@ -9,9 +9,24 @@
 PJL generates PJL code.
 
 =end
-    
+
 
 require "pipe"
+
+
+class Object
+  def to_pjlkey ; to_s ; end
+end
+class String
+  def to_pjlkey ; v = gsub '"', "''" ; %Q("#{v}") ; end
+end
+class Symbol
+  def to_pjlkey ; r = to_s; r.upcase! ; r ; end
+end
+class Array
+  def to_pjlkey ; map { |x| x.to_pjlkey }.join ; end
+end
+
 
 # PJL generation
 #
@@ -40,10 +55,11 @@ module PJL
     uel
     pjl
     j = { :name => name.to_s }
-    pjl_opt :job, j, *args
+    args.push j
+    pjl :job, *args
     yield
   ensure
-    pjl_opt :eoj, j
+    pjl :eoj, j
     uel
   end
 
@@ -68,30 +84,23 @@ module PJL
   end
   alias nop noop
 
-  def echo *args
-    pjl :echo, *args
-  end
-
-  def comment *args
-    pjl :comment, *args
-  end
-
   def method_missing name, *args, &block
-    nh = args.find { |a| not Hash === a }
-    if nh then
-      raise NoMethodError,
-                    "undefined instance method `#{meth}' for #{self.class}"
+    if block then
+      super
     else
-      n = name.to_s
-      case n
-        when /\Apjl_/ then pjl_opt $', *args
-        else               pjl_opt n,  *args
-      end
+      args.each { |a|
+        case a
+          when String, Symbol, Hash then next
+          else                           super
+        end
+      }
+      if name.to_s =~ /\Apjl_/ then name = $'.to_sym end
+      pjl name, *args
     end
   end
 
   def enter language
-    pjl_opt :enter, :language => language.to_sym
+    pjl :enter, :language => language.to_sym
     yield
   ensure
     uel
@@ -111,32 +120,16 @@ module PJL
   end
 
   def pjl *args
-    l = [ "@PJL", *args]
-    l.flatten!
-    z = l.join " "
-    puts z
-  end
-
-  def pjl_opt name, *args
     opt = {}
-    args.each { |a| a.each { |k,v| opt[ k] = v } }
-    cmd = [ name.to_s.upcase]
-    @m and @m.each { |k,v|
-      cmd.push k.to_s.upcase, ":", v
-    }
-    opt.each { |k,v|
-      w = case v
-        when String then
-          v = v.gsub '"', "''"
-          "\"#{v}\""
-        when Symbol then
-          v = v.to_s.upcase
-        else
-          v.to_s
-      end
-      cmd.push k.to_s.upcase, "=", w
-    }
-    pjl cmd
+    opt.update args.pop while args.last.is_a? Hash
+    l = []
+    args.flatten!
+    args.each { |a| l.push a }
+    @m and @m.each { |k,v| l.push [ k, :":", v] }
+    opt      .each { |k,v| l.push [ k, :"=", v] }
+    cmd = "@PJL"
+    l.each { |x| cmd << " " << x.to_pjlkey }
+    puts cmd
   end
 
 end
