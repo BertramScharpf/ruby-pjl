@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 #
-#  mfc7420  --  Print to Brother MFC7420
+#  ifbrother  --  Print to Brother MFC7420
 #
 
 require "rubygems"
@@ -15,9 +15,10 @@ class MFC7420Appl < PjlAppl
 
   RES = 600
 
-  GS = %W(gs -r#{RES}
-            -q -dBATCH -dPARANOIDSAFER -dQUIET -dNOPAUSE
-            -sDEVICE=ljet2p -sOutputFile=- - -c quit)
+  GS = %W(
+    gs -q -dBATCH -dPARANOIDSAFER -dQUIET -dNOPAUSE
+        -sDEVICE=ljet2p -r#{RES} -sOutputFile=- -
+  )
 
   def frame
     job "#@login@#@host-#$$" do

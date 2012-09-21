@@ -1,0 +1,43 @@
+#!/usr/local/bin/ruby
+
+#
+#  ifkyocera  --  input filter kyocera printer
+#
+
+require "rubygems"
+require "pjl/appl"
+
+class KyoceraFSAppl < PjlAppl
+
+  private
+
+  def frame
+    puts <<-EOT
+!R! FRPO N7,1; CMNT Das kann Postscripts settumble nicht.; EXIT,E;
+    EOT
+    display = "#@login@#@host"
+    job "#@login@#@host-#$$", :display => display do
+      rdymsg :display => display
+      set :economode => :off
+      enter :postscript do
+        l = $stdin.readline
+        case l
+          when /^%!/, /^%PDF/ then
+            begin
+              print l
+            end while l = readline
+          else
+            Pipe.run %w(a2ps -q) do |p|
+              p.feed l
+              p.feed $stdin
+            end
+        end
+      end
+      rdymsg :display => ""
+    end
+  end
+
+end
+
+exit KyoceraFSAppl.run
+

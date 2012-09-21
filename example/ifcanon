@@ -1,0 +1,61 @@
+#!/usr/local/bin/ruby
+
+#
+#  ifcanon  --  input filter for Canon printer
+#
+
+require "rubygems"
+
+require "pjl/appl"
+require "socket"
+
+class CanonIRAppl < PjlAppl
+
+  attr_writer :tray
+
+  define_option "t", :tray=,  "NUM",                          "paper source"
+  alias_option  "t", "tray"
+
+  def run
+    @tray ||= ($0 =~ /-tray(\d+)\z/) && $1.to_i
+    super
+  end
+
+  private
+
+  def job
+    uel
+    pjl "CQue2.0-2"
+    yield
+  ensure
+    uel
+  end
+
+  GS = %w(
+    gs -q -dBATCH -dPARANOIDSAFER -dNOPAUSE -sDEVICE=ljet4 -sOutputFile=- -
+  )
+
+  def frame
+    uh = "#@login@#@host"
+    h, = Socket.gethostname.split "."
+    jn = "#{h}-#$$!#@login@#@host"
+    job do
+      comment :canpjl, :set, :username   => uh
+      comment :canpjl, :set, :docname    => jn
+      comment :canpjl, :set, :sortermode => :genericon
+      comment :canpjl, :set, :staple     => :genericoff
+      comment :canpjl, :set, :punch      => :genericoff
+      comment :canpjl, :set, :booklet    => :genericoff
+      if @tray then
+        set :mediasource => :"tray#@tray"
+      end
+      enter :pcl do
+        pipe GS
+      end
+    end
+  end
+
+end
+
+exit CanonIRAppl.run
+
