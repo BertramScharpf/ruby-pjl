@@ -5,10 +5,13 @@
 #
 
 require "rubygems"
-require "pjl"
+
+require "pjl/appl"
 
 
-class MFC7420 < PJL
+class MFC7420Appl < PjlAppl
+
+  include PJL
 
   RES = 600
 
@@ -16,8 +19,8 @@ class MFC7420 < PJL
             -q -dBATCH -dPARANOIDSAFER -dQUIET -dNOPAUSE
             -sDEVICE=ljet2p -sOutputFile=- - -c quit)
 
-  def run name
-    job name do
+  def frame
+    job "#@login@#@host-#$$" do
       set :ras1200mode => :off
       set :resolution  => RES
       set :economode   => :off
@@ -34,14 +37,5 @@ class MFC7420 < PJL
 
 end
 
-opts = {}
-while $*.first =~ /\A-(.)/ do
-  opts[ $1] = $'
-  $*.shift
-end
-
-jn = opts[ "A"]
-jn ||= %Q{#{opts[ "n"]}@#{opts[ "h"]}-#$$}
-
-MFC7420.new.run jn
+exit MFC7420Appl.run
 

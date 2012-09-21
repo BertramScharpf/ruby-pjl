@@ -9,7 +9,6 @@
 PJL generates PJL code.
 
 =end
-
     
 
 require "pipe"
@@ -18,7 +17,8 @@ require "pipe"
 #
 # = Example
 #
-#   class MyPrinter < PJL
+#   class MyPrinter
+#     include PJL
 #     def run
 #       job "job-#$$" do
 #         rdymsg :display => "wait..."
@@ -31,7 +31,7 @@ require "pipe"
 #   end
 #   MyPrinter.new.run
 #
-class PJL
+module PJL
 
   VERSION = "1.0"
 
