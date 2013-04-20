@@ -4,8 +4,6 @@
 #  ifcanon  --  input filter for Canon printer
 #
 
-require "rubygems"
-
 require "pjl/appl"
 require "socket"
 
@@ -50,7 +48,7 @@ class CanonIRAppl < PjlAppl
         set :mediasource => :"tray#@tray"
       end
       enter :pcl do
-        pipe GS
+        system *GS
       end
     end
   end

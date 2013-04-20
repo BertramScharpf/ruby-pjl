@@ -2,7 +2,7 @@
 
 Just write some PJL commands from a Ruby program.
 
-See file <code>example/mfc7420</code> for an example.
+See file <code>example/if*</code> for how to do it.
 
 == Contents
 
@@ -10,5 +10,5 @@ See file <code>example/mfc7420</code> for an example.
 
 == TODO
 
-Write RDoc.
+Write some more documentation.
 

@@ -11,9 +11,6 @@ PJL generates PJL code.
 =end
 
 
-require "pipe"
-
-
 class Object
   def to_pjlkey ; to_s ; end
 end
@@ -47,8 +44,6 @@ end
 #   MyPrinter.new.run
 #
 module PJL
-
-  VERSION = "1.0"
 
   def job name, *args
     print "\0"*32
@@ -105,12 +100,6 @@ module PJL
   ensure
     uel
     pjl
-  end
-
-  def pipe cmd
-    Pipe.run cmd, $stdout do |p|
-      p.feed $stdin
-    end
   end
 
   private

@@ -4,8 +4,6 @@
 #  ifbrother  --  Print to Brother MFC7420
 #
 
-require "rubygems"
-
 require "pjl/appl"
 
 
@@ -31,7 +29,7 @@ class MFC7420Appl < PjlAppl
       set :paper       => :a4
       set :pageprotect => :auto
       enter :pcl do
-        pipe GS
+        system *GS
       end
     end
   end

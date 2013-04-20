@@ -2,36 +2,32 @@
 #  pjl.gemspec  --  Ruby-PJL Gem specification
 #
 
-require "./lib/pjl.rb"
+$:.unshift "./lib"
+require "pjl/version.rb"
 
 Gem::Specification.new do |s|
-  s.name              = "pjl"
-  s.version           = PJL::VERSION
-  s.summary           = "PJL generation"
-
-  s.description       = <<-EOT
-Write PJL commands from a Ruby program.
-                          EOT
-
-  s.license           = "BSD"
-  s.authors           = [ "Bertram Scharpf"]
-  s.email             = "<software@bertram-scharpf.de>"
-  s.homepage          = "http://www.bertram-scharpf.de"
-
+  s.name              = PJL::NAME
   s.rubyforge_project = "NONE"     # Only this prevents a warning.
+  s.version           = PJL::VERSION
+  s.summary           = PJL::SUMMARY
+  s.description       = PJL::DESCRIPTION
+  s.license           = PJL::LICENSE
+  s.authors           = PJL::TEAM
+  s.email             = PJL::AUTHOR
+  s.homepage          = PJL::HOMEPAGE
 
-  s.requirements      = "Just Ruby"
+  s.requirements      = "Some other tools from the same author"
   s.add_dependency      "appl", ">=1.0"
-  s.add_dependency      "bs-ruby", ">=3.2"
 
   s.files             = %w(
                           lib/pjl.rb
                           lib/pjl/appl.rb
-                          example/mfc7420
+                          lib/pjl/version.rb
+                          example/ifbrother
+                          example/ifcanon
+                          example/ifkyocera
                         )
   s.executables       = %w(
-                        )
-  s.extra_rdoc_files  = %w(
                         )
 
 

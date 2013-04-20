@@ -4,7 +4,6 @@
 #  ifkyocera  --  input filter kyocera printer
 #
 
-require "rubygems"
 require "pjl/appl"
 
 class KyoceraFSAppl < PjlAppl

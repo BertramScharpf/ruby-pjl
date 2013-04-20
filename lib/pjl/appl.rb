@@ -1,10 +1,6 @@
-#!/usr/bin/env ruby
-
 #
 #  pjl/appl.rb  --  Application
 #
-
-require "rubygems"
 
 require "appl"
 require "pjl"
@@ -12,7 +8,7 @@ require "pjl"
 class PjlAppl < Application
 
   NAME      = "pjlappl"
-  VERSION   = "1.0"
+  VERSION   = "0.0"
   SUMMARY   = "This is just a template"
 
   attr_writer :width, :length, :indent, :login, :host
@@ -40,6 +36,7 @@ class PjlAppl < Application
   alias_option  "V", "version"
 
   def run
+    @host ||= gethostname
     @host, = @host.split "."
     @acct_file = @args.shift
     if @plain then
@@ -53,6 +50,13 @@ class PjlAppl < Application
   end
 
   include PJL
+
+  private
+
+  def gethostname
+    require "socket"
+    Socket.gethostname
+  end
 
 end
 
