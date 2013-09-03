@@ -10,7 +10,7 @@ module PJL
   SUMMARY     = "PJL generation"
 
   DESCRIPTION = <<EOT
-Write PJL commands from a Ruby program.
+Write PJL (Printer Job Language) commands from a Ruby program.
 EOT
 
   COPYRIGHT   = "(C) 2013 Bertram Scharpf"

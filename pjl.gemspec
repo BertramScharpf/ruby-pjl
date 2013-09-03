@@ -30,7 +30,6 @@ Gem::Specification.new do |s|
   s.executables       = %w(
                         )
 
-
   s.has_rdoc          = true
   s.extra_rdoc_files  = %w(
                           README
