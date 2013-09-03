@@ -12,7 +12,7 @@ class KyoceraFSAppl < PjlAppl
 
   def frame
     puts <<-EOT
-!R! FRPO N7,1; CMNT Das kann Postscripts settumble nicht.; EXIT,E;
+!R! FRPO N7,1; CMNT Postscripts settumble cannnot do that.; EXIT,E;
     EOT
     display = "#@login@#@host"
     job "#@login@#@host-#$$", :display => display do
