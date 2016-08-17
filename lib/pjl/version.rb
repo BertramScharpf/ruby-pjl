@@ -5,7 +5,7 @@
 module PJL
 
   NAME        = "pjl"
-  VERSION     = "1.0"
+  VERSION     = "1.0".freeze
 
   SUMMARY     = "PJL generation"
 
@@ -17,7 +17,7 @@ EOT
   LICENSE     = "BSD"
   AUTHOR      = "Bertram Scharpf <software@bertram-scharpf.de>"
   TEAM        = [ "Bertram Scharpf"]
-  HOMEPAGE    = "http://www.bertram-scharpf.de"
+  HOMEPAGE    = "http://www.bertram-scharpf.de/software/pjl"
 
 end
 

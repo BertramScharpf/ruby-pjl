@@ -2,8 +2,7 @@
 #  pjl.gemspec  --  Ruby-PJL Gem specification
 #
 
-$:.unshift "./lib"
-require "pjl/version.rb"
+require "./lib/pjl/version.rb"
 
 Gem::Specification.new do |s|
   s.name              = PJL::NAME
