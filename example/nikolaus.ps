@@ -1,0 +1,31 @@
+%!PS-Adobe-3.0
+
+%
+%  nikolaus.ps  --  Das Haus vom Nikolaus
+%
+
+% << /Duplex true >> setpagedevice
+% statusdict begin true setduplexmode true settumble end
+
+/Phi { 5 sqrt 1 sub 2 div } def
+
+newpath
+
+100 100 moveto
+100 200 lineto
+200 200 lineto
+100 100 lineto
+200 100 lineto
+100 200 lineto
+100 100 2 div add 200 100 Phi mul add lineto
+200 200 lineto
+200 100 lineto
+
+stroke
+
+/Courier findfont 10 scalefont setfont
+100 350 moveto
+(Das ist das Haus vom Nikolaus.) show
+
+showpage
+

@@ -1,12 +1,35 @@
-= ruby-pjl 1.0  --  Generating PJL in Ruby
+= ruby-pjl 1.1  --  Generating PJL in Ruby
 
-Just write some PJL commands from a Ruby program.
+Just write some PJL commands by a Ruby program.
 
-See file <code>example/if*</code> for how to do it.
 
 == Contents
 
 * class PJL
+
+
+== Functionality
+
+  $ cd example
+
+Get help.
+
+  $ ./ifbrother -H
+
+Pipe a PostScript file to the printer.
+
+  $ cat nikolaus.ps | ./ifbrother | cat >/dev/ulpt0
+
+Set up the filter.
+
+  $ vi printcap
+  $ sudo vi /etc/printcap
+
+
+== Writing Filters
+
+See the files <code>example/if*</code> for how to do it.
+
 
 == TODO
 

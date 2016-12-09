@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+#
+#  iffile  --  Print to file
+#
+
+require "supplement"
+require "pjl/appl"
+
+
+class FileAppl < PjlAppl
+
+  NAME      = "iffile"
+  VERSION   = "1.0"
+  SUMMARY   = "Printer driver writing to a file"
+
+  OUTDIR = "/var/tmp/lpd-files"
+
+  def run
+    File.open output_path, "w" do |f|
+      f.puts $stdin.read
+    end
+  end
+
+  private
+
+  def output_path
+    File.directory? OUTDIR or Dir.mkdir! OUTDIR
+    timestamp = Time.now.strftime "%Y%m%d-%H%M%S"
+    File.join OUTDIR, "lpd-job-#@login@#@host-#{timestamp}-#$$"
+  end
+
+end
+
+exit FileAppl.run
+

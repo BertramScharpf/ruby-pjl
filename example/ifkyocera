@@ -8,6 +8,10 @@ require "pjl/appl"
 
 class KyoceraFSAppl < PjlAppl
 
+  NAME      = "ifkyocera"
+  VERSION   = "1.0"
+  SUMMARY   = "Printer driver for Kyocera FS"
+
   private
 
   def frame

@@ -11,6 +11,8 @@ class PjlAppl < Application
   VERSION   = "0.0"
   SUMMARY   = "This is just a template"
 
+  DESCRIPTION = "Call this as an input filter from printcap."
+
   attr_writer :width, :length, :indent, :login, :host
   attr_bang :plain, :debug
 

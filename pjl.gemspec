@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.homepage          = PJL::HOMEPAGE
 
   s.requirements      = "Some other tools from the same author"
-  s.add_dependency      "appl", ">=1.0"
+  s.add_dependency      "appl", "~>1.0"
 
   s.files             = %w(
                           lib/pjl.rb
@@ -25,6 +25,9 @@ Gem::Specification.new do |s|
                           example/ifbrother
                           example/ifcanon
                           example/ifkyocera
+                          example/iffile
+                          example/printcap
+                          example/nikolaus.ps
                         )
   s.executables       = %w(
                         )

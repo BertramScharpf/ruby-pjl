@@ -1,0 +1,44 @@
+#
+#  printcap  --  Example FreeBSD printer configuration
+#
+
+# (C) 2016 Bertram Scharpf <software@bertram-scharpf.de>
+
+# WARNING! The filter-path capability "fp" below is an extension
+# written by me and filed in December 2015
+# (<https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=205604>).
+# The FreeBSD community is ignoring my proposal as diligently as possible.
+#
+# The problem: After lpd was started by the "service" command (not
+# /etc/rc.d/lpd from the command line!) the PATH environment variable
+# is set as in /etc/login.conf. If the filter is a Ruby script containing
+# a shebang line calling "env", the interpreter maybe will not be found.
+#
+#   #!/usr/bin/env ruby
+#
+# Possible solutions:
+#
+#   - Patch your base system and "make buildworld" etc. again.
+#
+#   - Replace the shebang line using an explicit path:
+#
+#       #!/usr/local/bin/ruby
+#
+#   - Set an extended PATH variable for the lpd daemon in /etc/rc.conf:
+#
+#       lpd_enable="YES"
+#       lpd_env="PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin"
+#
+#   - Check the path capability in /etc/login.conf.
+#
+# Good luck!
+#
+
+mfc7420|brother|lp:\
+        :mx=0:\
+        :sd=/var/spool/lpd/mfc7420:\
+        :sh:\
+        :lp=/dev/ulpt0:\
+        :fp=/sbin /bin /usr/sbin /usr/bin /usr/games /usr/local/sbin /usr/local/bin:\
+        :if=/usr/libexec/lpr/ifbrother:
+

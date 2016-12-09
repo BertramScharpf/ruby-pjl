@@ -9,9 +9,13 @@ require "socket"
 
 class CanonIRAppl < PjlAppl
 
+  NAME      = "ifcanon"
+  VERSION   = "1.0"
+  SUMMARY   = "Printer driver for Canon IR"
+
   attr_writer :tray
 
-  define_option "t", :tray=,  "NUM",                          "paper source"
+  define_option "t", :tray=, "NUM", "paper source"
   alias_option  "t", "tray"
 
   def run

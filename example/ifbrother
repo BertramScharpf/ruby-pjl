@@ -9,7 +9,9 @@ require "pjl/appl"
 
 class MFC7420Appl < PjlAppl
 
-  include PJL
+  NAME      = "ifbrother"
+  VERSION   = "1.0"
+  SUMMARY   = "This is just a template"
 
   RES = 600
 
