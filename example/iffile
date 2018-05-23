@@ -19,13 +19,14 @@ class FileAppl < PjlAppl
   def run
     File.open output_path, "w" do |f|
       f.puts $stdin.read
+      f.chmod 0666
     end
   end
 
   private
 
   def output_path
-    File.directory? OUTDIR or Dir.mkdir! OUTDIR
+    File.directory? OUTDIR or Dir.mkdir! OUTDIR, 0777
     timestamp = Time.now.strftime "%Y%m%d-%H%M%S"
     File.join OUTDIR, "lpd-job-#@login@#@host-#{timestamp}-#$$"
   end
