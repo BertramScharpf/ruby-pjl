@@ -121,5 +121,11 @@ module PJL
     puts cmd
   end
 
+  def system *args
+    unless super then
+      raise "#{args.first} terminated unsuccessful: #$?"
+    end
+  end
+
 end
 
