@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/env ruby
 
 #
 #  ifkyocera  --  input filter kyocera printer
