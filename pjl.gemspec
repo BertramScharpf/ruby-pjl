@@ -6,7 +6,6 @@ require "./lib/pjl/version.rb"
 
 Gem::Specification.new do |s|
   s.name              = PJL::NAME
-  s.rubyforge_project = "NONE"     # Only this prevents a warning.
   s.version           = PJL::VERSION
   s.summary           = PJL::SUMMARY
   s.description       = PJL::DESCRIPTION
@@ -32,7 +31,6 @@ Gem::Specification.new do |s|
   s.executables       = %w(
                         )
 
-  s.has_rdoc          = true
   s.extra_rdoc_files  = %w(
                           README
                           LICENSE

@@ -5,7 +5,7 @@
 module PJL
 
   NAME        = "pjl"
-  VERSION     = "1.2".freeze
+  VERSION     = "1.2.2".freeze
 
   SUMMARY     = "PJL generation"
 
