@@ -26,11 +26,10 @@ class CanonIRAppl < PjlAppl
   private
 
   def job
-    uel
-    pjl "CQue2.0-2"
-    yield
-  ensure
-    uel
+    uels do
+      pjl "CQue2.0-2"
+      yield
+    end
   end
 
   GS = %w(
@@ -42,14 +41,14 @@ class CanonIRAppl < PjlAppl
     h, = Socket.gethostname.split "."
     jn = "#{h}-#$$!#@login@#@host"
     job do
-      comment :canpjl, :set, :username   => uh
-      comment :canpjl, :set, :docname    => jn
-      comment :canpjl, :set, :sortermode => :genericon
-      comment :canpjl, :set, :staple     => :genericoff
-      comment :canpjl, :set, :punch      => :genericoff
-      comment :canpjl, :set, :booklet    => :genericoff
+      comment :canpjl, :set, username:   uh
+      comment :canpjl, :set, docname:    jn
+      comment :canpjl, :set, sortermode: :genericon
+      comment :canpjl, :set, staple:     :genericoff
+      comment :canpjl, :set, punch:      :genericoff
+      comment :canpjl, :set, booklet:    :genericoff
       if @tray then
-        set :mediasource => :"tray#@tray"
+        set mediasource: :"tray#@tray"
       end
       enter :pcl do
         system *GS

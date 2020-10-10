@@ -22,14 +22,14 @@ class MFC7420Appl < PjlAppl
 
   def frame
     job "#@login@#@host-#$$" do
-      set :ras1200mode => :off
-      set :resolution  => RES
-      set :economode   => :off
-      set :sourcetray  => :tray1
-      set :mediatype   => :regular
-      set :orientation => :portrait
-      set :paper       => :a4
-      set :pageprotect => :auto
+      set ras1200mode: :off
+      set resolution:  RES
+      set economode:   :off
+      set sourcetray:  :tray1
+      set mediatype:   :regular
+      set orientation: :portrait
+      set paper:       :a4
+      set pageprotect: :auto
       enter :pcl do
         system *GS
       end

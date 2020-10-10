@@ -33,7 +33,7 @@ end
 #     include PJL
 #     def run
 #       job "job-#$$" do
-#         rdymsg :display => "wait..."
+#         rdymsg display: "wait..."
 #         enter :postscript do
 #           puts "%!PS"
 #           ...
@@ -45,22 +45,20 @@ end
 #
 module PJL
 
-  def job name, *args
+  def job name, **kwargs
     print "\0"*32
-    uel
-    pjl
-    j = { :name => name.to_s }
-    args.push j
-    pjl :job, *args
-    yield
-  ensure
-    pjl :eoj, j
-    uel
+    uels do
+      pjl
+      pjl :job, name: name, **kwargs
+      yield
+    ensure
+      pjl :eoj, name: name
+    end
   end
 
   def lparm p
     m = @m
-    @m = { :lparm => p.to_sym }
+    @m = { lparm: p.to_sym }
     yield
   ensure
     @m = m
@@ -68,7 +66,7 @@ module PJL
 
   def iparm p
     m = @m
-    @m = { :iparm => p.to_sym }
+    @m = { iparm: p.to_sym }
     yield
   ensure
     @m = m
@@ -79,23 +77,23 @@ module PJL
   end
   alias nop noop
 
-  def method_missing name, *args, &block
+  def method_missing name, *args, **kwargs, &block
     if block then
       super
     else
       args.each { |a|
         case a
-          when String, Symbol, Hash then next
-          else                           super
+          when String, Symbol then next
+          else                     super
         end
       }
       if name.to_s =~ /\Apjl_/ then name = $'.to_sym end
-      pjl name, *args
+      pjl name, *args, **kwargs
     end
   end
 
   def enter language
-    pjl :enter, :language => language.to_sym
+    pjl :enter, language: language.to_sym
     yield
   ensure
     uel
@@ -108,23 +106,31 @@ module PJL
     print "\e%-12345X"
   end
 
-  def pjl *args
-    opt = {}
-    opt.update args.pop while args.last.is_a? Hash
-    l = []
+  def uels
+    uel
+    yield
+  ensure
+    uel
+  end
+
+  class Cmd
+    def initialize     ; @cmd = "@PJL" ; end
+    def to_s           ; @cmd          ; end
+    def push k         ;          @cmd << " " << k.to_pjlkey ; end
+    def pushkw k, s, v ; push k ; @cmd << s   << v.to_pjlkey ; end
+  end
+
+  def pjl *args, **kwargs
+    c = Cmd.new
     args.flatten!
-    args.each { |a| l.push a }
-    @m and @m.each { |k,v| l.push [ k, :":", v] }
-    opt      .each { |k,v| l.push [ k, :"=", v] }
-    cmd = "@PJL"
-    l.each { |x| cmd << " " << x.to_pjlkey }
-    puts cmd
+    args   .each { |a|   c.push   a         }
+    @m    &.each { |k,v| c.pushkw k, ":", v }
+    kwargs .each { |k,v| c.pushkw k, "=", v }
+    puts c
   end
 
   def system *args
-    unless super then
-      raise "#{args.first} terminated unsuccessful: #$?"
-    end
+    super or raise "#{args.first} terminated unsuccessful: #$?"
   end
 
 end

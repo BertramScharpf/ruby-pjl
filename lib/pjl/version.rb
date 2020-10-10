@@ -5,7 +5,7 @@
 module PJL
 
   NAME        = "pjl"
-  VERSION     = "1.2.2".freeze
+  VERSION     = "1.3".freeze
 
   SUMMARY     = "PJL generation"
 
@@ -13,7 +13,7 @@ module PJL
 Write PJL (Printer Job Language) commands from a Ruby program.
 EOT
 
-  COPYRIGHT   = "(C) 2013-2018 Bertram Scharpf"
+  COPYRIGHT   = "(C) 2013-2020 Bertram Scharpf"
   LICENSE     = "BSD-2-Clause"
   AUTHOR      = "Bertram Scharpf <software@bertram-scharpf.de>"
   TEAM        = [ "Bertram Scharpf"]

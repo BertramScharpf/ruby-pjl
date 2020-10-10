@@ -19,9 +19,9 @@ class KyoceraFSAppl < PjlAppl
 !R! FRPO N7,1; CMNT Postscripts settumble cannnot do that.; EXIT,E;
     EOT
     display = "#@login@#@host"
-    job "#@login@#@host-#$$", :display => display do
-      rdymsg :display => display
-      set :economode => :off
+    job "#@login@#@host-#$$", display: display do
+      rdymsg display: display
+      set economode: :off
       enter :postscript do
         l = $stdin.readline
         case l
@@ -36,7 +36,7 @@ class KyoceraFSAppl < PjlAppl
             end
         end
       end
-      rdymsg :display => ""
+      rdymsg display: ""
     end
   end
 
